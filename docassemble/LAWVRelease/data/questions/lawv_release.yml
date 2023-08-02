@@ -10,7 +10,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2020-12-04
+  revision_date: 2023-08-02
 ---
 objects:
   - a: Individual
@@ -121,7 +121,7 @@ subquestion: |
   be sent to your email: ${ a.email }
 action buttons:
   - label: Leave
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: warning
     icon: sign-out-alt
 need:
@@ -141,7 +141,7 @@ subquestion: |
   % endif
 action buttons:
   - label: Exit
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: danger
     icon: sign-out-alt
 ---
@@ -159,7 +159,7 @@ subquestion: |
   Reason: ${ failure_reason }  
 action buttons:
   - label: Exit
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: danger
     icon: sign-out-alt
 ---
