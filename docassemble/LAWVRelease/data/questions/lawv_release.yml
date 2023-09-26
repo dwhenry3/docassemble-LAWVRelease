@@ -531,12 +531,10 @@ action buttons:
     icon: sign-out-alt
 ---
 code: |
-  client_emailed = True
-  # client_emailed = send_email(to=c,attachments=lawv_release,template=see_attached)
+  client_emailed = send_email(to=c,attachments=lawv_release,template=see_attached)
 ---
 code: |
-  attorney_emailed = True
-  # attorney_emailed = send_email(to=a,attachments=lawv_release,template=see_attached)
+  attorney_emailed = send_email(to=a,attachments=lawv_release,template=see_attached)
 ---
 ga id: challengeFail
 event: challenge_fail
@@ -579,11 +577,11 @@ content: |
 ---
 template: client_reject
 subject: |
-  ${ c.name.full() } has rejected the document.
+  ${ c.name.full() } rejected signing the release.
 content: |
   Dear ${ a.name.full() },
   
-  ${ c.name.full() } has rejected the document.  Please contact them.
+  ${ c.name.full() } rejected signing the release.  Please contact them.
 
   Legal Aid of West Virginia
 ---
@@ -717,49 +715,8 @@ code: |
     custodian.initials = custodian.name.first[:1] + custodian.name.last[:1]
     if fast_choice["represent"]:
       fast_options
-
-  if release_select == "lawv":
-    if lawv_client_review == 'reject':
-      recipients = [a]
-      send_email(to=recipients,template=client_reject)      
-      reject
-  elif release_select == "voca":
-    if voca_client_review == 'reject':
-      recipients = [a]
-      send_email(to=recipients,template=client_reject)      
-      reject
-  elif release_select == "cps":
-    if cps_client_review == 'reject':
-      recipients = [a]
-      send_email(to=recipients,template=client_reject)      
-      reject
-  elif release_select == 'lis':
-    if lis_client_review == 'reject':
-      recipients = [a]
-      send_email(to=recipients,template=client_reject)      
-      reject    
-  elif release_select == "fast":
-    if fast_choice["release"]:
-      if fast_release_client_review == 'reject':
-        recipients = [a]
-        send_email(to=recipients,template=client_reject)      
-        reject
-    if fast_choice["represent"]:
-      if fast_represent_client_review == 'reject':
-        recipients = [a]
-        send_email(to=recipients,template=client_reject)      
-        reject
-  c_method
-  if c_method == 'type':
-    if (release_select == 'fast') and custodian_present == True:
-      c.signature = '/s/ ' + custodian.name.full()
-    else:
-      c.signature = '/s/ ' + c.name.full()
-  date = current_datetime()
-  c.signature
-  final_screen
-
-  # send_email(to=c,template=notification)
+  
+  send_email(to=c,template=notification)
   attorney_setup = True
   prevent_going_back()
   force_ask('attorney_final')
