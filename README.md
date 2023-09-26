@@ -1,8 +1,1 @@
-# docassemble.LAWVRelease
-
-A docassemble extension.
-
-## Author
-
-System Administrator, dhenry@lawv.net
-
+Multi-part interview for creating one of 5 releases (LAWV General, VOCA {Victims of Crime Act}, DHHR CPS, Lawyer in the School, and FAST).  FAST also has the option for creating a request for representation, which is separate from the FAST Retainer.  

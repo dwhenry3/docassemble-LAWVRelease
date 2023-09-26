@@ -44,9 +44,9 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.LAWVRelease',
-      version='0.0.5',
+      version='1.0.1',
       description=('A docassemble extension.'),
-      long_description='# docassemble.LAWVRelease\n\nA docassemble extension.\n\n## Author\n\nSystem Administrator, dhenry@lawv.net\n\n',
+      long_description='Multi-part interview for creating one of 5 releases (LAWV General, VOCA {Victims of Crime Act}, DHHR CPS, Lawyer in the School, and FAST).  FAST also has the option for creating a request for representation, which is separate from the FAST Retainer.  ',
       long_description_content_type='text/markdown',
       author='System Administrator',
       author_email='dhenry@lawv.net',
