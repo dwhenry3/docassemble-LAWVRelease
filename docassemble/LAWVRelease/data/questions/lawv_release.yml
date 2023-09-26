@@ -531,10 +531,38 @@ action buttons:
     icon: sign-out-alt
 ---
 code: |
-  client_emailed = send_email(to=c,attachments=lawv_release,template=see_attached)
+  if release_select == "lawv":
+    client_emailed = send_email(to=c,attachments=lawv_release,template=see_attached)
+  elif release_select == "voca":
+    client_emailed = send_email(to=c,attachments=voca_release,template=see_attached)
+  elif release_select == "cps":
+    client_emailed = send_email(to=c,attachments=cps_release,template=see_attached)
+  elif release_select == 'lis':
+    client_emailed = send_email(to=c,attachments=lis_release,template=see_attached)
+  elif release_select == "fast":
+    if fast_choice["release"] and fast_choice["represent"]:
+      client_emailed = send_email(to=c,attachments=[fast_release, fast_represent],template=see_attached)
+    elif fast_choice["release"]:
+      client_emailed = send_email(to=c,attachments=fast_release,template=see_attached)
+    elif fast_choice["represent"]:
+      client_emailed = send_email(to=c,attachments=fast_represent,template=see_attached)
 ---
 code: |
-  attorney_emailed = send_email(to=a,attachments=lawv_release,template=see_attached)
+  if release_select == "lawv":
+    attorney_emailed = send_email(to=a,attachments=lawv_release,template=see_attached)
+  elif release_select == "voca":
+    attorney_emailed = send_email(to=a,attachments=voca_release,template=see_attached)
+  elif release_select == "cps":
+    attorney_emailed = send_email(to=a,attachments=cps_release,template=see_attached)
+  elif release_select == 'lis':
+    attorney_emailed = send_email(to=a,attachments=lis_release,template=see_attached)
+  elif release_select == "fast":
+    if fast_choice["release"] and fast_choice["represent"]:
+      attorney_emailed = send_email(to=a,attachments=[fast_release, fast_represent],template=see_attached)
+    elif fast_choice["release"]:
+      attorney_emailed = send_email(to=a,attachments=fast_release,template=see_attached)
+    elif fast_choice["represent"]:
+      attorney_emailed = send_email(to=a,attachments=fast_represent,template=see_attached)
 ---
 ga id: challengeFail
 event: challenge_fail
