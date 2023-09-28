@@ -1,6 +1,6 @@
 metadata:
   title: |
-    LAWV Release
+    Legal Aid of West Virginia Electronic Release Tool
   short title: |
     LAWV Release
   description: |
@@ -10,7 +10,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2023-09-15
+  revision_date: 2023-09-28
 ---
 features:
   javascript: force_lightmode.js
@@ -144,7 +144,7 @@ fields:
 ---
 ga id: custodianInfo
 question: |
-  Provide information on ${ c.name.full() }'s custodian
+  Provide information on ${ c.possessive('custodian') }
 subquestion: |
   A custodian can be a parent, guardian, or other person who will sign
   on the client's behalf.
@@ -255,7 +255,11 @@ fields:
 ---
 ga id: clientBirthday
 question: |
-  Please enter your birthday
+  % if release_select == "fast":
+    Please enter ${ c.possessive('birthday') }
+  % else:
+    Please enter your birthday
+  % endif
 fields:
   - no label: challenge
     datatype: date
@@ -413,7 +417,7 @@ question: |
 subquestion: |
   ${ a.name.full() } has submitted a release for your signature. Legal 
   Aid of West Virginia is asking you to sign this release so that 
-  our advocates can get important paperwork about your case.
+  our advocates can get important paperwork about ${ c.possessive('case') }.
 
   Specifically:
 
@@ -435,7 +439,7 @@ question: |
 subquestion: |
   ${ a.name.full() } has submitted an Authorization for Representation 
   for your signature. Legal Aid of West Virginia is asking you to sign 
-  this authorization so that our advocates can work your case.
+  this authorization so that our advocates can work ${ c.possessive('case') }.
 
   Specifically, LAWV is seeking:
 
@@ -479,7 +483,11 @@ ga id: clientSignature
 question: |
   How would you like your name signed?
 subquestion: |
-  **Typed** will insert '/s/ ${ c.name.full()}'
+  % if release_select == "fast":
+    **Typed** will insert '/s/ ${ custodian.name.full() }'
+  % else:
+    **Typed** will insert '/s/ ${ c.name.full()}'
+  % endif
 
   **Digitally Sign** will allow you to use the mouse, trackpad,
   or finger (device depending) to sign your name
@@ -495,7 +503,11 @@ question: |
   Sign your name
 signature: c.signature
 under: |
-  ${ c.name.full() }
+  % if release_select == "fast":
+    ${ custodian.name.full() }
+  % else:
+    ${ c.name.full() }
+  % endif
 ---
 event: attorney_final
 question: |
@@ -622,9 +634,9 @@ attachment:
     fields:
       - "client_name" : ${ c.name.full() }
       - "family_election": ${ lawv_options }
-      - "signature": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
-      - "signature_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+      - "client_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
+      - "client_signature_1_text": |
+          ${ c.signature if c_method == 'type' else ''}
       - "signature_date_af_date": ${ date.format() }
 ---
 attachment:
@@ -647,7 +659,7 @@ attachment:
       - "duration": ${ 'One Year' if not voca_end else '' }
       - "expiration_af_date": ${ voca_end_date.format() if voca_end else '' }
       - "client_signature_1_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+          ${ c.signature if c_method == 'type' else ''}
       - "client_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
       - "client_signature_1_af_date": ${ date.format() }
 ---
@@ -665,7 +677,7 @@ attachment:
       - "i_am_the": 'Parent'
       - "client_initials": ${ c.initials }
       - "client_signature_1_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+          ${ c.signature if c_method == 'type' else ''}
       - "signature_date_af_date": ${ date.format() }
       - "client_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
 ---
@@ -683,13 +695,13 @@ attachment:
       - "state": ${ c.address.state }
       - "phone": ${ c.phone }
       - "text_OK": ${ lis_text_ok }
-      - "student_name": ${ lis_student_names if client_as_student else '' }
+      - "student_name": ${ lis_student_names if not client_as_student else '' }
       - "services_from": ${ lis_purpose }
       - "client_signature_1_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+          ${ c.signature if c_method == 'type' else ''}
       - "client_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
       - "signature_date_af_date": ${ date.format() }
-      - "relationship": ${ lis_relationship if client_as_student else '' }
+      - "relationship": ${ lis_relationship if not client_as_student else '' }
 ---
 attachment:
   - name: fast_release
@@ -703,7 +715,7 @@ attachment:
       - "parent_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
       - "parent_date_af_date": ${ date.format() }
       - "parent_signature_1_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+          ${ c.signature if c_method == 'type' else ''}
       - "client_dob_af_date": ${ c.birthdate.format() }
 ---
 attachment:
@@ -723,7 +735,7 @@ attachment:
       - "parent_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
       - "parent_date_af_date": ${ date.format() }
       - "parent_signature_1_text": |
-          ${ '/s/ ' + c.name.full() if c_method == 'type' else ''}
+          ${ c.signature if c_method == 'type' else ''}
 ---
 code: |
   a.name.first
@@ -734,6 +746,7 @@ code: |
   elif release_select == "voca":
     voca_scope
   elif release_select == "cps":
+    c.initials = c.name.first[:1] + c.name.last[:1]
     social
   elif release_select == "lis":
     lis_purpose    
