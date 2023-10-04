@@ -225,16 +225,13 @@ fields:
   - Phone Number: c.phone
   - Text OK?: lis_text_ok
     datatype: yesnoradio
-  - Is the client the student?: client_as_student
+  - Is there a student involved that may need help?: client_as_student
     datatype: yesnoradio
+    required: False
   - Student(s) Name: lis_student_names
-    show if: 
-      variable: client_as_student
-      is: False
+    show if: client_as_student
   - Client relationship to student: lis_relationship
-    show if: 
-      variable: client_as_student
-      is: False
+    show if: client_as_student
   - Purpose of Referral: lis_purpose
     hint: Get possible services from...
 ---
@@ -695,13 +692,13 @@ attachment:
       - "state": ${ c.address.state }
       - "phone": ${ c.phone }
       - "text_OK": ${ lis_text_ok }
-      - "student_name": ${ lis_student_names if not client_as_student else '' }
+      - "student_name": ${ lis_student_names if client_as_student else '' }
       - "services_from": ${ lis_purpose }
       - "client_signature_1_text": |
           ${ c.signature if c_method == 'type' else ''}
       - "client_signature_1": ${ c.signature.show(width='3in') if c_method == 'sign' else '' }
       - "signature_date_af_date": ${ date.format() }
-      - "relationship": ${ lis_relationship if not client_as_student else '' }
+      - "relationship": ${ lis_relationship if client_as_student else '' }
 ---
 attachment:
   - name: fast_release
