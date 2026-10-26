@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools==80.9.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docassemble.LAWVRelease"
+version = "1.0.9"
+description = "A docassemble extension for a multi-part interview for creating one of 5 releases (LAWV General, VOCA {Victims of Crime Act}, DHHR CPS, Lawyer in the School, and FAST)."
+readme = "README.md"
+authors = [
+    { name = "System Administrator", email = "dhenry@lawv.net" },
+]
+dependencies = []
+license = "MIT"
+license-files = [
+    "LICENSE",
+]
+
+[project.urls]
+Homepage = "https://docassemble.org"
+
+[tool.setuptools.packages.find]
+where = [
+    ".",
+]

@@ -1,6 +1,6 @@
 import os
 import sys
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 from fnmatch import fnmatchcase
 from distutils.util import convert_path
 
@@ -44,18 +44,16 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.LAWVRelease',
-      version='1.0.8',
+      version='1.0.9',
       description=('A docassemble extension for a multi-part interview for creating one of 5 releases (LAWV General, VOCA {Victims of Crime Act}, DHHR CPS, Lawyer in the School, and FAST).'),
       long_description='Multi-part interview for creating one of 5 releases (LAWV General, VOCA {Victims of Crime Act}, DHHR CPS, Lawyer in the School, and FAST).  FAST also has the option for creating a request for representation, which is separate from the FAST Retainer.  ',
       long_description_content_type='text/markdown',
       author='System Administrator',
       author_email='dhenry@lawv.net',
-      license='The MIT License (MIT)',
+      license='MIT',
       url='https://docassemble.org',
-      packages=find_packages(),
-      namespace_packages=['docassemble'],
+      packages=find_namespace_packages(),
       install_requires=[],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/LAWVRelease/', package='docassemble.LAWVRelease'),
      )
-
